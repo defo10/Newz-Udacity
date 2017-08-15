@@ -14,8 +14,6 @@ import com.example.android.newz.R;
 
 import java.util.ArrayList;
 
-import static com.example.android.newz.R.id.view;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -23,7 +21,7 @@ import static com.example.android.newz.R.id.view;
  * interface.
  */
 public class ScienceFragment extends Fragment {
-    private View rootView;
+
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -46,8 +44,8 @@ public class ScienceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_science_list, container, false);
-        View view = rootView.findViewById(R.id.list);
+        View view = inflater.inflate(R.layout.fragment_science_list, container, false);
+        view = view.findViewById(R.id.list);
 
         // Set the adapter
         if (view instanceof RecyclerView) {

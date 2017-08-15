@@ -21,7 +21,6 @@ import java.util.ArrayList;
  * interface.
  */
 public class WorldNewsFragment extends Fragment {
-
     private OnListFragmentInteractionListener mListener;
 
     /**
