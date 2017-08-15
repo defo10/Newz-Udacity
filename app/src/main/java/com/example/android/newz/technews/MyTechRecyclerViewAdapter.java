@@ -1,4 +1,4 @@
-package com.example.android.newz;
+package com.example.android.newz.technews;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.newz.WorldNewsFragment.OnListFragmentInteractionListener;
+import com.example.android.newz.ArticleEntry;
+import com.example.android.newz.R;
+import com.example.android.newz.technews.TechFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -15,18 +17,12 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link ArticleEntry} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  */
-public class MyWorldNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyWorldNewsRecyclerViewAdapter.ViewHolder> {
+public class MyTechRecyclerViewAdapter extends RecyclerView.Adapter<MyTechRecyclerViewAdapter.ViewHolder> {
 
     private final List<ArticleEntry> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    /**
-     * Constructor for the Adapter
-     * @param items List consisting of ArticleEntry-Objects
-     * @param listener the OnClickListener which needed to be implemented by the
-     * {@link OnListFragmentInteractionListener}.
-     */
-    public MyWorldNewsRecyclerViewAdapter(List<ArticleEntry> items, OnListFragmentInteractionListener listener) {
+    public MyTechRecyclerViewAdapter(List<ArticleEntry> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -34,7 +30,7 @@ public class MyWorldNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyWorld
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_worldnews, parent, false);
+                .inflate(R.layout.fragment_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -68,7 +64,8 @@ public class MyWorldNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyWorld
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mViewId;
         public final TextView mTitleId;
-        @Nullable public final TextView mPublicationDateId;
+        @Nullable
+        public final TextView mPublicationDateId;
         @Nullable public final TextView mAuthorId;
         public final TextView mSectionId;
         @Nullable public ArticleEntry mItem;

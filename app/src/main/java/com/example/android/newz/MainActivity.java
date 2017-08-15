@@ -11,7 +11,15 @@ import android.view.MenuItem;
 
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements WorldNewsFragment.OnListFragmentInteractionListener {
+import com.example.android.newz.sciencenews.ScienceFragment;
+import com.example.android.newz.technews.TechFragment;
+import com.example.android.newz.worldnews.WorldNewsFragment;
+
+public class MainActivity extends AppCompatActivity implements
+        TechFragment.OnListFragmentInteractionListener,
+        WorldNewsFragment.OnListFragmentInteractionListener,
+        ScienceFragment.OnListFragmentInteractionListener {
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**

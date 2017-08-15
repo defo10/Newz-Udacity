@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.android.newz.sciencenews.ScienceFragment;
+import com.example.android.newz.technews.TechFragment;
+import com.example.android.newz.worldnews.WorldNewsFragment;
+
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
@@ -20,9 +24,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return WorldNewsFragment.newInstance();
             case 1:
-                return WorldNewsFragment.newInstance();
+                return TechFragment.newInstance();
             case 2:
-                return WorldNewsFragment.newInstance();
+                return ScienceFragment.newInstance();
         }
         return null;
     }

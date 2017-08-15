@@ -1,13 +1,17 @@
-package com.example.android.newz;
+package com.example.android.newz.technews;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.android.newz.ArticleEntry;
+import com.example.android.newz.R;
 
 import java.util.ArrayList;
 
@@ -17,20 +21,19 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class WorldNewsFragment extends Fragment {
-
+public class TechFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public WorldNewsFragment() {
+    public TechFragment() {
     }
 
     @SuppressWarnings("unused")
-    public static WorldNewsFragment newInstance() {
-        return new WorldNewsFragment();
+    public static TechFragment newInstance() {
+        return new TechFragment();
     }
 
     @Override
@@ -41,7 +44,7 @@ public class WorldNewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_worldnews_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_tech_list, container, false);
         view = view.findViewById(R.id.list);
 
         // Set the adapter
@@ -54,15 +57,15 @@ public class WorldNewsFragment extends Fragment {
              * DELETE SAMPLE-ENTRY-List
              */
             ArrayList<ArticleEntry> tmp = new ArrayList<>();
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
+            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
 
-            recyclerView.setAdapter(new MyWorldNewsRecyclerViewAdapter(tmp, mListener));
+            recyclerView.setAdapter(new MyTechRecyclerViewAdapter(tmp, mListener));
         }
         return view;
     }
