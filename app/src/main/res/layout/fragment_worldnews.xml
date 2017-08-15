@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="App-Developers are shocked! Incredible App developed by Udacity-Student!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/container_publication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/publ_on_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Published on "
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/publication_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/publ_on_static"
+            android:layout_toRightOf="@+id/publ_on_static"
+            android:fontFamily="sans-serif"
+            android:text="August 12th"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/publ_in_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/publication_date"
+            android:layout_toRightOf="@+id/publication_date"
+            android:fontFamily="sans-serif"
+            android:text=" in "
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/publ_in_static"
+            android:layout_toRightOf="@+id/publ_in_static"
+            android:fontFamily="sans-serif"
+            android:text="news"
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/container_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container_publication"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/by_static"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="by "
+            android:textAppearance="@android:style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Max Mustermann"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/by_static"
+            android:layout_toEndOf="@+id/by_static" />
+
+    </RelativeLayout>
+</RelativeLayout>
