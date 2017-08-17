@@ -16,10 +16,10 @@ public class ArticleEntry {
 
     /**
      * Constructor for the Entries of Articles in the List's
-     * @param mTitle is the title of the article
-     * @param mSection is the sections it belongs to (e.g. 'technology')
-     * @param mRawPublicationDate is the _raw_ publication date (e.g. '2017-08-14T09:41:36Z')
-     * @param mUrl is the Web-URL to the article
+     * @param mTitle: is the title of the article
+     * @param mSection: is the sections it belongs to (e.g. 'technology')
+     * @param mRawPublicationDate: is the _raw_ publication date (e.g. '2017-08-14T09:41:36Z')
+     * @param mUrl: is the Web-URL to the article
      */
     public ArticleEntry(String mTitle, String mSection, @Nullable String mRawPublicationDate, String mUrl, @Nullable String mAuthor) {
         this.mTitle = mTitle;
