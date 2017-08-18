@@ -3,7 +3,6 @@ package com.example.android.newz.sciencenews;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +28,7 @@ public class ScienceFragment
         extends Fragment
         implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
-    MyScienceRecyclerViewAdapter adapter;
+    private MyScienceRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
     /**

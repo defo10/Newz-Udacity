@@ -3,7 +3,6 @@ package com.example.android.newz;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.newz.sciencenews.ScienceFragment;
 import com.example.android.newz.technews.TechFragment;
@@ -14,7 +13,7 @@ import com.example.android.newz.worldnews.WorldNewsFragment;
  * one of the sections/tabs/pages.
  */
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }

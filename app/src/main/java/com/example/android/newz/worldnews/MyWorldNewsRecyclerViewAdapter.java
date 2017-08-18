@@ -13,8 +13,6 @@ import com.example.android.newz.R;
 
 import java.util.List;
 
-import static com.example.android.newz.worldnews.WorldNewsFragment.adapter;
-
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ArticleEntry} and makes a call to the
  * specified {@link WorldNewsFragment.OnListFragmentInteractionListener}.

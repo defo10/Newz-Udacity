@@ -26,8 +26,8 @@ import java.util.List;
  */
 
 public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
-    static final String LOG = "ArticleLoader";
-    int urlLinks;
+    private static final String LOG = "ArticleLoader";
+    private final int urlLinks;
 
     public ArticleLoader(Context context, int url) {
         super(context);
@@ -157,8 +157,8 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                             published = item.getString("webPublicationDate");
                             SimpleDateFormat freshDate = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
                             Date date = freshDate.parse(published);
-                            SimpleDateFormat newDate = new SimpleDateFormat("M, dd");
-                            published = newDate.format(date);
+                            SimpleDateFormat newDate = new SimpleDateFormat("dd.MM kk:mm");
+                            published = newDate.format(date) + " o'clock ";
 
                         } catch (java.text.ParseException e) {
                             Log.e(LOG, "Error with date parsing");
@@ -167,9 +167,9 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                         }
                     }
 
-                    String author = "unknown";
+                    String author = " Unknown";
                     if (item.has("tags") && item.getJSONArray("tags").length() != 0) {
-                        StringBuilder authorCreator = new StringBuilder();
+                        StringBuilder authorCreator = new StringBuilder(" ");
                         try {
                             JSONArray tags = item.getJSONArray("tags");
 

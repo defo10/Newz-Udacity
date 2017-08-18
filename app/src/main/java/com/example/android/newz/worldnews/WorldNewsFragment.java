@@ -16,10 +16,7 @@ import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.ArticleLoader;
 import com.example.android.newz.R;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * A fragment representing a list of Items.
@@ -31,7 +28,7 @@ public class WorldNewsFragment
         extends Fragment
         implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
-    static MyWorldNewsRecyclerViewAdapter adapter;
+    private static MyWorldNewsRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
     /**

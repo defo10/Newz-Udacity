@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Newz</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh News</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="example_title">App-Developers are shocked! Incredible App developed by Udacity-Student!</string>
+    <string name="published_on">Published on</string>
+    <string name="august_12th">example_date</string>
+    <string name="in">in</string>
+    <string name="news">news</string>
+    <string name="max_mustermann">Max Mustermann</string>
+    <string name="by">by</string>
 </resources>

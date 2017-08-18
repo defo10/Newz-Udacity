@@ -7,7 +7,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.ArticleLoader;
 import com.example.android.newz.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public class TechFragment
         extends Fragment
         implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
-    MyTechRecyclerViewAdapter adapter;
+    private MyTechRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
     /**
