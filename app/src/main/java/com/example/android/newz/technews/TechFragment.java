@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,8 @@ import java.util.List;
  * interface.
  */
 public class TechFragment
-        extends Fragment {
+        extends Fragment
+        implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
     MyTechRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
@@ -63,6 +65,8 @@ public class TechFragment
             adapter = new MyTechRecyclerViewAdapter(AllArticles.getTechArticleList(), mListener);
             recyclerView.setAdapter(adapter);
         }
+
+        getLoaderManager().initLoader(2, null, this);
         return view;
     }
 
@@ -90,6 +94,22 @@ public class TechFragment
         adapter.updateTechNewsAdapter();
     }
 
+    // below are the abstract methods for the LoaderManager
+    @Override
+    public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
+        return new ArticleLoader(getContext(), 2);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<ArticleEntry>> loader, List<ArticleEntry> data) {
+        AllArticles.setTechArticleList(data);
+        adapter.updateTechNewsAdapter();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<ArticleEntry>> loader) {
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -103,5 +123,6 @@ public class TechFragment
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(ArticleEntry item);
     }
+
 
 }

@@ -35,7 +35,7 @@ public class MyWorldNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyWorld
         mListener = listener;
     }
 
-    public void updateWorlNewsAdapter() {
+    public void updateWorldNewsAdapter() {
         mValues.clear();
         mValues.addAll(AllArticles.getNewsArticleList());
         this.notifyDataSetChanged();

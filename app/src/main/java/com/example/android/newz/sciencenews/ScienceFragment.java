@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,10 @@ import android.view.ViewGroup;
 
 import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
+import com.example.android.newz.ArticleLoader;
 import com.example.android.newz.R;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -21,7 +26,8 @@ import com.example.android.newz.R;
  * interface.
  */
 public class ScienceFragment
-        extends Fragment {
+        extends Fragment
+        implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
     MyScienceRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
@@ -58,6 +64,8 @@ public class ScienceFragment
             adapter = new MyScienceRecyclerViewAdapter(AllArticles.getScienceArticleList(), mListener);
             recyclerView.setAdapter(adapter);
         }
+
+        getLoaderManager().initLoader(1, null, this);
         return view;
     }
 
@@ -85,8 +93,20 @@ public class ScienceFragment
         adapter.updateScienceNewsAdapter();
     }
 
-    public void refreshList() {
+    // below are the abstract methods for the LoaderManager
+    @Override
+    public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
+        return new ArticleLoader(getContext(), 1);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<ArticleEntry>> loader, List<ArticleEntry> data) {
+        AllArticles.setScienceArticleList(data);
         adapter.updateScienceNewsAdapter();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<ArticleEntry>> loader) {
     }
 
     /**
@@ -102,4 +122,5 @@ public class ScienceFragment
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(ArticleEntry item);
     }
+
 }

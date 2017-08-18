@@ -28,7 +28,8 @@ import static android.os.Build.VERSION_CODES.M;
  * interface.
  */
 public class WorldNewsFragment
-        extends Fragment {
+        extends Fragment
+        implements LoaderManager.LoaderCallbacks<List<ArticleEntry>> {
 
     static MyWorldNewsRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
@@ -65,6 +66,9 @@ public class WorldNewsFragment
             adapter = new MyWorldNewsRecyclerViewAdapter(AllArticles.getNewsArticleList(), mListener);
             recyclerView.setAdapter(adapter);
         }
+
+        getLoaderManager().initLoader(0, null, this);
+
         return view;
     }
 
@@ -89,7 +93,23 @@ public class WorldNewsFragment
     @Override
     public void onResume() {
         super.onResume();
-        adapter.updateWorlNewsAdapter();
+        adapter.updateWorldNewsAdapter();
+    }
+
+    // below are the abstract methods for the LoaderManager
+    @Override
+    public Loader<List<ArticleEntry>> onCreateLoader(int id, Bundle args) {
+        return new ArticleLoader(getContext(), 0);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<ArticleEntry>> loader, List<ArticleEntry> data) {
+        AllArticles.setNewsArticleList(data);
+        adapter.updateWorldNewsAdapter();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<ArticleEntry>> loader) {
     }
 
     /**
