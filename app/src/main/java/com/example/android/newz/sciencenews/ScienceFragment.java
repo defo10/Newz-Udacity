@@ -3,16 +3,16 @@ package com.example.android.newz.sciencenews;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.R;
-
-import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -20,8 +20,10 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ScienceFragment extends Fragment {
+public class ScienceFragment
+        extends Fragment {
 
+    MyScienceRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -45,7 +47,7 @@ public class ScienceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_science_list, container, false);
-        view = view.findViewById(R.id.list);
+        view = view.findViewById(R.id.list_science);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -53,19 +55,8 @@ public class ScienceFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            /**
-             * DELETE SAMPLE-ENTRY-List
-             */
-            ArrayList<ArticleEntry> tmp = new ArrayList<>();
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test3", "news", "22-3-2918", "www.google.com", "Daniel"));
-
-            recyclerView.setAdapter(new MyScienceRecyclerViewAdapter(tmp, mListener));
+            adapter = new MyScienceRecyclerViewAdapter(AllArticles.getScienceArticleList(), mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -88,6 +79,15 @@ public class ScienceFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.updateScienceNewsAdapter();
+    }
+
+    public void refreshList() {
+        adapter.updateScienceNewsAdapter();
+    }
 
     /**
      * This interface must be implemented by activities that contain this

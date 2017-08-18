@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.R;
 import com.example.android.newz.technews.TechFragment.OnListFragmentInteractionListener;
@@ -25,6 +26,12 @@ public class MyTechRecyclerViewAdapter extends RecyclerView.Adapter<MyTechRecycl
     public MyTechRecyclerViewAdapter(List<ArticleEntry> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void updateTechNewsAdapter() {
+        mValues.clear();
+        mValues.addAll(AllArticles.getTechArticleList());
+        this.notifyDataSetChanged();
     }
 
     @Override

@@ -3,16 +3,21 @@ package com.example.android.newz.technews;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
+import com.example.android.newz.ArticleLoader;
 import com.example.android.newz.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -20,7 +25,10 @@ import java.util.ArrayList;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TechFragment extends Fragment {
+public class TechFragment
+        extends Fragment {
+
+    MyTechRecyclerViewAdapter adapter;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -44,7 +52,7 @@ public class TechFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tech_list, container, false);
-        view = view.findViewById(R.id.list);
+        view = view.findViewById(R.id.list_tech);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -52,19 +60,8 @@ public class TechFragment extends Fragment {
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            /**
-             * DELETE SAMPLE-ENTRY-List
-             */
-            ArrayList<ArticleEntry> tmp = new ArrayList<>();
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-            tmp.add(new ArticleEntry("Test2", "news", "22-3-2918", "www.google.com", "Daniel"));
-
-            recyclerView.setAdapter(new MyTechRecyclerViewAdapter(tmp, mListener));
+            adapter = new MyTechRecyclerViewAdapter(AllArticles.getTechArticleList(), mListener);
+            recyclerView.setAdapter(adapter);
         }
         return view;
     }
@@ -87,6 +84,12 @@ public class TechFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.updateTechNewsAdapter();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -100,4 +103,5 @@ public class TechFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(ArticleEntry item);
     }
+
 }

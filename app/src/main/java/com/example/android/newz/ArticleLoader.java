@@ -16,14 +16,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static android.R.attr.tag;
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * ArticleLoader searches the given url for new content and returns it in the MainActivity
@@ -31,26 +27,11 @@ import static android.os.Build.VERSION_CODES.M;
 
 public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
     static final String LOG = "ArticleLoader";
-    private final static String WORLD_NEWS =
-            "http://content.guardianapis.com/search?order-by=relevance&show-tags=contributor&from-date=2017-08-14&section=world&page-size=50&page=1&api-key=test";
-    private final static String SCIENCE_NEWS =
-            "http://content.guardianapis.com/search?order-by=newest&show-tags=contributor&section=science&page-size=25&page=1&api-key=test";
-    private final static String TECH_NEWS =
-            "http://content.guardianapis.com/search?order-by=newest&show-tags=contributor&section=technology&page-size=25&page=1&api-key=test";
-    static String url;
+    int urlLinks;
 
-    /**
-     * ArticleLoader is the constructor.
-     *
-     * @param context is the current activity
-     * @param url     represents one of the _NEWS.
-     *                0 = WORLD_NEWS
-     *                1 = SCIENCE_NEWS
-     *                2 = TECH_NEWS
-     */
-    public ArticleLoader(Context context, String url) {
+    public ArticleLoader(Context context, int url) {
         super(context);
-        this.url = url;
+        this.urlLinks = url;
     }
 
     @Override
@@ -63,7 +44,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
         return new Sync().syncNow();
     }
 
-    static class Sync {
+    class Sync {
         private static final int READ_TIMEOUT_IN_MS = 10000;
         private static final int CONNECT_TIMEOUT_IN_MS = 15000;
 
@@ -73,34 +54,31 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
 
         // syncNow accesses the url-String of the ArticleLoader
         List<ArticleEntry> syncNow() {
-            // 1. fetching data
-            URL url = createURL(ArticleLoader.url);
+            // 1. creating url
+            URL url = createURL(urlLinks);
 
             // 2. Getting inputStream (JSON-Response)
-            InputStream inputStream = null;
+            String inputStream = null;
             try {
                 inputStream = makeHttpRequest(url);
             } catch (IOException e) {
                 Log.e(LOG, "There has been an error while calling makeHttpRequest");
             }
 
-            // 3. Parsing the inputStream into a String
-            String jsonRespone = null;
-            try {
-                jsonRespone = readFromStream(inputStream);
-            } catch (IOException e) {
-                Log.e(LOG, "There has been an error while reading from Stream");
-            }
-
-            // 4. extract data from String
-            return extractData(jsonRespone);
+            // 3. extract data from String
+            return extractData(inputStream);
         }
 
         // 1.
-        private URL createURL(String url) {
+        private URL createURL(int url) {
+            String link = "";
+            if (url == 0) link = AllArticles.WORLD_NEWS;
+            if (url == 1) link = AllArticles.SCIENCE_NEWS;
+            if (url == 2) link = AllArticles.TECH_NEWS;
+
             URL newURL = null;
             try {
-                newURL = new URL(url);
+                newURL = new URL(link);
             } catch (MalformedURLException e) {
                 Log.e(LOG, e.getMessage());
             }
@@ -108,9 +86,11 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
         }
 
         // 2.
-        private InputStream makeHttpRequest(URL url) throws IOException {
+        private String makeHttpRequest(URL url) throws IOException {
             HttpURLConnection urlConnection = null;
             InputStream inputStream = null;
+
+            String jsonResponse = "";
 
             try {
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -122,11 +102,12 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                 // then read the input stream
                 if (urlConnection.getResponseCode() == 200 || urlConnection.getResponseCode() == 400) {
                     inputStream = urlConnection.getInputStream();
+                    jsonResponse = readFromStream(inputStream);
                 } else {
-                    Log.e("QueryUtils", "Error response code: " + urlConnection.getResponseCode());
+                    Log.e("makeHttpRequest", "Error response code: " + urlConnection.getResponseCode());
                 }
             } catch (IOException e) {
-                Log.e("QueryUtils", e.getMessage());
+                Log.e("makeHttpRequest", e.getMessage());
             } finally {
                 if (urlConnection != null) {
                     urlConnection.disconnect();
@@ -135,24 +116,23 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                     inputStream.close();
                 }
             }
-            return inputStream;
+            return jsonResponse;
         }
 
         // 3.
         private String readFromStream(InputStream is) throws IOException {
             StringBuilder output = new StringBuilder();
 
-            if (is != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(is, Charset.forName("UTF-8"));
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append(line);
-                    line = reader.readLine();
-                }
-                reader.close();
-                inputStreamReader.close();
+            InputStreamReader inputStreamReader = new InputStreamReader(is, Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
             }
+            reader.close();
+            inputStreamReader.close();
+
             return output.toString();
         }
 
@@ -163,11 +143,11 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
             try {
                 JSONObject baseJsonResponse = new JSONObject(unfilteredString);
                 JSONObject metaData = baseJsonResponse.getJSONObject("response");
-
                 JSONArray itemArray = metaData.getJSONArray("results");
-                JSONObject item = null;
 
                 for (int i = 0; i < metaData.getInt("pageSize"); i++) {
+                    JSONObject item = itemArray.getJSONObject(i);
+
                     // for an easier overview, we get the publication date
                     // and author name seperately
 
@@ -175,7 +155,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                     if (item.has("webPublicationDate")) {
                         try {
                             published = item.getString("webPublicationDate");
-                            SimpleDateFormat freshDate = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
+                            SimpleDateFormat freshDate = new SimpleDateFormat("yyyy-MM-dd'T'kk:mm:ss'Z'");
                             Date date = freshDate.parse(published);
                             SimpleDateFormat newDate = new SimpleDateFormat("M, dd");
                             published = newDate.format(date);
@@ -188,21 +168,21 @@ public class ArticleLoader extends AsyncTaskLoader<List<ArticleEntry>> {
                     }
 
                     String author = "unknown";
-                    if (item.has("tags")) {
+                    if (item.has("tags") && item.getJSONArray("tags").length() != 0) {
                         StringBuilder authorCreator = new StringBuilder();
                         try {
                             JSONArray tags = item.getJSONArray("tags");
 
-                            for (int n = 0; n < tags.length(); n++) {
+                            for (int n = 0; n < tags.length(); ++n) {
                                 String newAuthor = tags.getJSONObject(n).getString("webTitle");
-                                newAuthor = newAuthor + ", ";
                                 authorCreator.append(newAuthor);
+                                authorCreator.append(", ");
                             }
-
-                            authorCreator.delete(authorCreator.length() - 2, author.length() - 1);
-
                         } catch (JSONException e) {
                             Log.e(LOG, "Error getting tag array (i.e. authors)");
+                        } finally {
+                            authorCreator.deleteCharAt(authorCreator.length() - 1);
+                            authorCreator.deleteCharAt(authorCreator.length() - 1);
                         }
                         author = authorCreator.toString();
                     }

@@ -3,6 +3,7 @@ package com.example.android.newz;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.android.newz.sciencenews.ScienceFragment;
 import com.example.android.newz.technews.TechFragment;
@@ -49,4 +50,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
+
+
 }

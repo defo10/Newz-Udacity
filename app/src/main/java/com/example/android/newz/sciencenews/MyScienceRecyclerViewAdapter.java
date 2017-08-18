@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.R;
 import com.example.android.newz.sciencenews.ScienceFragment.OnListFragmentInteractionListener;
@@ -25,6 +26,12 @@ public class MyScienceRecyclerViewAdapter extends RecyclerView.Adapter<MyScience
     public MyScienceRecyclerViewAdapter(List<ArticleEntry> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void updateScienceNewsAdapter() {
+        mValues.clear();
+        mValues.addAll(AllArticles.getScienceArticleList());
+        this.notifyDataSetChanged();
     }
 
     @Override

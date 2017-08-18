@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.newz.AllArticles;
 import com.example.android.newz.ArticleEntry;
 import com.example.android.newz.R;
 
 import java.util.List;
+
+import static com.example.android.newz.worldnews.WorldNewsFragment.adapter;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ArticleEntry} and makes a call to the
@@ -30,6 +33,12 @@ public class MyWorldNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyWorld
     public MyWorldNewsRecyclerViewAdapter(List<ArticleEntry> items, WorldNewsFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void updateWorlNewsAdapter() {
+        mValues.clear();
+        mValues.addAll(AllArticles.getNewsArticleList());
+        this.notifyDataSetChanged();
     }
 
     @Override
